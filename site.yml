@@ -1,0 +1,6 @@
+---
+- name: Playbook Mestre
+  hosts: all
+  become: true
+  roles:
+    - meu_webserver

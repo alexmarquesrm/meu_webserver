@@ -1,0 +1,21 @@
+---
+- name: Configurar Servidores Web
+  hosts: all
+  become: true  # Isto diz ao Ansible para usar "sudo" (root)
+
+  tasks:
+    - name: Instalar o servidor Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Iniciar o serviço Nginx
+      service:
+        name: nginx
+        state: started
+
+    - name: Criar uma página HTML personalizada
+      copy:
+        content: "<h1>Ola do Ansible - Day 3 Completo!</h1>"
+        dest: /var/www/html/index.html

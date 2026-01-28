@@ -1,0 +1,24 @@
+---
+- name: Playbook com Variáveis
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Instalar o pacote definido na variavel
+      apt:
+        name: "{{ package_name }}"
+        state: present
+        update_cache: yes
+
+    - name: Iniciar o serviço
+      service:
+        name: "{{ package_name }}"
+        state: started
+
+    - name: Criar página HTML dinâmica
+      copy:
+        content: |
+          <h1>Ola!</h1>
+          <p>Eu sou o: <b>{{ nome_servidor }}</b></p>
+          <p>O meu IP no Proxmox é: {{ ansible_host }}</p>
+        dest: /var/www/html/index.html
