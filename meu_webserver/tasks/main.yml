@@ -1,0 +1,22 @@
+---
+# tasks file for meu_webserver
+- name: Instalar Nginx e Git
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - nginx
+    - git
+
+- name: Garantir que Nginx esta a correr
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Criar pagina HTML da Role
+  copy:
+    content: "<h1>Esta pagina foi criada pela minha Role Ansible!</h1>"
+    dest: /var/www/html/index.html
+# tasks file for meu_webserver
