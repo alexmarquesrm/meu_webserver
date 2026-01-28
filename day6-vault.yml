@@ -1,0 +1,21 @@
+---
+- name: Day 6 - Ansible Vault no Proxmox
+  hosts: all
+  become: true
+
+  # Carregar explicitamente o ficheiro encriptado
+  vars_files:
+    - group_vars/all/pass.yml
+
+  tasks:
+    - name: Criar um utilizador secreto (agente007)
+      user:
+        name: agente007
+        # O Ansible desencripta a variavel 'minha_senha_secreta' automaticamente aqui
+        password: "{{ minha_senha_secreta | password_hash('sha512') }}"
+        shell: /bin/bash
+        state: present
+
+    - name: Confirmacao
+      debug:
+        msg: "Utilizador criado com sucesso usando a senha do cofre!"
